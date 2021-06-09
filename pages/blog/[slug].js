@@ -2,9 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import marked from 'marked';
 import matter from 'gray-matter';
-import Layout from '../../components/Layout';
+import Layout from '@/components/Layout';
 import Link from 'next/link';
-import CategoryLabel from '../../components/CategoryLabel';
+import CategoryLabel from '@/components/CategoryLabel';
 
 const BlogPage = ({
   frontmatter: {
