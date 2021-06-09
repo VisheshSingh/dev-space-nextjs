@@ -5,19 +5,27 @@ import Post from '@/components/Post';
 import { POSTS_PER_PAGE } from '@/config/index';
 import Pagination from '@/components/Pagination';
 import { getPosts } from 'lib';
+import CategoryList from '@/components/CategoryList';
 
-export default function BlogPage({ posts, numPages, currentPage }) {
+export default function BlogPage({ posts, numPages, currentPage, categories }) {
   return (
     <Layout>
-      <h1 className='text-5xl border-b-4 p-5 font-bold'>Blogs</h1>
+      <div className='flex justify-center'>
+        <div className='w-3/4 mr-10'>
+          <h1 className='text-5xl border-b-4 p-5 font-bold'>Blogs</h1>
 
-      <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-5'>
-        {posts.map((post) => (
-          <Post key={post.slug} post={post} />
-        ))}
+          <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-5'>
+            {posts.map((post) => (
+              <Post key={post.slug} post={post} />
+            ))}
+          </div>
+
+          <Pagination currentPage={currentPage} numPages={numPages} />
+        </div>
+        <div className='w-1/4'>
+          <CategoryList categories={categories} />
+        </div>
       </div>
-
-      <Pagination currentPage={currentPage} numPages={numPages} />
     </Layout>
   );
 }
@@ -47,6 +55,11 @@ export const getStaticProps = ({ params }) => {
 
   const posts = getPosts();
 
+  const categories = posts.map((post) => post.frontmatter.category);
+
+  const uniqueCategories = [...new Set(categories)];
+  console.log(uniqueCategories);
+
   const numPages = Math.ceil(files.length / POSTS_PER_PAGE);
   const pageIndex = page - 1;
   const orderedPosts = posts.slice(
@@ -59,6 +72,7 @@ export const getStaticProps = ({ params }) => {
       posts: orderedPosts,
       numPages,
       currentPage: +page,
+      categories: uniqueCategories,
     },
   };
 };
