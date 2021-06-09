@@ -4,8 +4,10 @@ import matter from 'gray-matter';
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import Post from '../components/Post';
+import { sortByDate } from '../utils';
 
 export default function HomePage({ posts }) {
+  console.log(posts);
   return (
     <Layout>
       <h1 className='text-5xl border-b-4 p-5 font-bold'>Latest Posts</h1>
@@ -40,7 +42,7 @@ export const getStaticProps = () => {
 
   return {
     props: {
-      posts: posts.slice(0, 6),
+      posts: posts.sort(sortByDate).slice(0, 6),
     },
   };
 };
