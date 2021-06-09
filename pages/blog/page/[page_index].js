@@ -5,6 +5,7 @@ import Layout from '../../../components/Layout';
 import Post from '../../../components/Post';
 import { sortByDate } from '../../../utils';
 import { POSTS_PER_PAGE } from '../../../config';
+import Pagination from '../../../components/Pagination';
 
 export default function BlogPage({ posts, numPages, currentPage }) {
   return (
@@ -16,6 +17,8 @@ export default function BlogPage({ posts, numPages, currentPage }) {
           <Post key={post.slug} post={post} />
         ))}
       </div>
+
+      <Pagination currentPage={currentPage} numPages={numPages} />
     </Layout>
   );
 }
@@ -66,7 +69,7 @@ export const getStaticProps = ({ params }) => {
     props: {
       posts: orderedPosts,
       numPages,
-      currentPage: page,
+      currentPage: +page,
     },
   };
 };
