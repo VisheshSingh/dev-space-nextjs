@@ -4,7 +4,7 @@ import Link from 'next/link';
 import matter from 'gray-matter';
 import Layout from '@/components/Layout';
 import Post from '@/components/Post';
-import { sortByDate } from '@/utils/index';
+import { getPosts } from 'lib';
 
 export default function CategoryPage({ posts, categoryName }) {
   return (
@@ -46,16 +46,7 @@ export const getStaticPaths = () => {
 export const getStaticProps = ({ params: { category } }) => {
   const files = fs.readdirSync(path.join('posts'));
 
-  const posts = files.map((file) => {
-    const slug = file.replace('.md', '');
-    const markdownWithMeta = fs.readFileSync(path.join('posts', file), 'utf-8');
-    const { data: frontmatter } = matter(markdownWithMeta);
-
-    return {
-      slug,
-      frontmatter,
-    };
-  });
+  const posts = getPosts();
 
   // Filter by category
   const filteredPosts = posts.filter(
@@ -64,7 +55,7 @@ export const getStaticProps = ({ params: { category } }) => {
 
   return {
     props: {
-      posts: filteredPosts.sort(sortByDate),
+      posts: filteredPosts,
       categoryName: category,
     },
   };
