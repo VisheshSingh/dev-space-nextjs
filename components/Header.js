@@ -12,7 +12,7 @@ const Header = () => {
           </a>
         </Link>
         <nav className='flex flex-wrap md:w-4/5 justify-end md:ml-auto'>
-          <Link href='/blogs'>
+          <Link href='/blog'>
             <a className='mx-5 cursor-pointer hover:text-indigo-300 uppercase'>
               Blogs
             </a>
