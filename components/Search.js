@@ -1,24 +1,26 @@
-import { useState, useEffect } from 'react'
-import { FaSearch } from 'react-icons/fa'
+import { useState, useEffect } from 'react';
+import { FaSearch } from 'react-icons/fa';
 // import SearchResults from './SearchResults'
 
 export default function Search() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [searchResults, setSearchResults] = useState([])
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     const getResults = async () => {
       if (searchTerm === '') {
-        setSearchResults([])
+        setSearchResults([]);
       } else {
-        const res = await fetch(`/api/search?q=${searchTerm}`)
-        const { results } = await res.json()
-        setSearchResults(results)
+        const res = await fetch(`/api/search?q=${searchTerm}`);
+        console.log({ res });
+        const { results } = await res.json();
+        console.log(results);
+        setSearchResults(results);
       }
-    }
+    };
 
-    getResults()
-  }, [searchTerm])
+    getResults();
+  }, [searchTerm]);
 
   return (
     <div className='relative bg-gray-600 p-4'>
@@ -42,5 +44,5 @@ export default function Search() {
 
       {/* <SearchResults results={searchResults} /> */}
     </div>
-  )
+  );
 }
