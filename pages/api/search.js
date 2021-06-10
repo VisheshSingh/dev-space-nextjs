@@ -6,6 +6,7 @@ export default (req, res) => {
 
   if (process.env.NODE_ENV === 'production') {
     // @TODO - cache posts
+    posts = require('../../cache/data.js').posts;
   } else {
     posts = getPosts();
   }
